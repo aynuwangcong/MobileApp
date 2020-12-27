@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcc.dao.IUsersDao">
+    <insert id="insertUsers">
+      insert into users (user_id,user_name,user_sex,user_age,department,duty,mail,mobil_phone,family_phone,office_phone,birthday,MSN,address,remark) values(#{user_id},#{user_name},#{user_sex},#{user_age},#{department},#{duty},#{mail},#{mobil_phone},#{family_phone},#{office_phone},#{birthday},#{MSN},#{address},#{remark})
+  </insert>
+    <update id="updateUsers">
+        update users set user_id=#{user_id},user_name=#{user_name},user_sex=#{user_sex},user_age=#{user_age},department=#{department},duty=#{duty},mail=#{mail},mobil_phone=#{mobil_phone},family_phone=#{family_phone},office_phone=#{office_phone},birthday=#{birthday},MSN=#{MSN},address=#{address},remark=#{remark} where id =#{id}
+    </update>
+    <delete id="deleteUsers" >
+        delete from users where user_id= #{user_id}
+    </delete>
+    <select id="selectUsersById" resultType="Users">
+        select * from users where user_id = #{user_id}
+    </select>
+    <select id="selectAllUsers" resultType="Users">
+        select * from users limit 0,6
+    </select>
+    <select id="selectAllUsers1" resultType="int">
+        select count(*) from users
+    </select>
+    <select id="selectCurrentPage" resultType="Users">
+        select * from users limit #{pageStartIndex},#{pageSize}
+    </select>
+    <select id="selectCompound1" resultType="Users">
+        select * from users
+        <where>
+            <if test="users.user_id !=null&amp;&amp;users.user_id !=''">
+                users.user_id = #{users.user_id}
+            </if>
+            <if test="users.user_sex != null&amp;&amp;users.user_sex!=''">
+                and users.user_sex = #{users.user_sex}
+            </if>
+            <if test="users.user_age != null&amp;&amp;users.user_age!=''">
+                and users.user_age = #{users.user_age}
+            </if>
+            <if test="users.user_name !=null&amp;&amp;users.user_name !=''">
+                and users.user_name = #{users.user_name}
+            </if>
+            <if test="users.department != null&amp;&amp;users.department!=''">
+                and users.department = #{users.department}
+            </if>
+            <if test="users.duty != null&amp;&amp;users.duty!=''">
+                and users.duty = #{users.duty}
+            </if>
+        </where>
+        limit #{pageStartIndex},6
+    </select>
+</mapper>
